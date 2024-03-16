@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+      <title>HaiTeng Zheng - systemctl</title>
+      <link>https://haiteng.com</link>
+      <description>A personal blog focused on linux, software and others.</description>
+      <generator>Zola</generator>
+      <language>en</language>
+      <atom:link href="https://haiteng.com/tags/systemctl/rss.xml" rel="self" type="application/rss+xml"/>
+      <lastBuildDate>Wed, 03 Jan 2024 00:00:00 +0000</lastBuildDate>
+      <item>
+          <title>Linux power control</title>
+          <pubDate>Wed, 03 Jan 2024 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://haiteng.com/docs/linux-power-control/</link>
+          <guid>https://haiteng.com/docs/linux-power-control/</guid>
+          <description>&lt;h1 id=&quot;poweroff-shortcut&quot;&gt;poweroff shortcut&lt;&#x2F;h1&gt;
+&lt;p&gt;&lt;code&gt;Ctrl-Alt-Delete&lt;&#x2F;code&gt; is the shortcut for poweroffing the linux machine.&lt;&#x2F;p&gt;
+&lt;p&gt;On Linux systems that do not use systemd, it is contolled by the `&#x2F;etc&#x2F;iniitab&#x27; 
+(no longer use in other system)&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;configure-ctrl-alt-delete&quot;&gt;configure Ctrl-Alt-Delete&lt;&#x2F;h2&gt;
+&lt;p&gt;Ref: &lt;code&gt;man 7 systemd.special&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;The &lt;code&gt;Ctrl-Alt-Delete&lt;&#x2F;code&gt; unit file is not a service, but a target, so it does not
+run as a daemon. If the &lt;code&gt;&#x2F;etc&#x2F;systemd&#x2F;system&#x2F;ctrl-alt-del.target&lt;&#x2F;code&gt; symlink
+exists, &lt;code&gt;Ctrl-Alt-Delete&lt;&#x2F;code&gt; is enables.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#6c7079;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#eb6772;&quot;&gt;sudo&lt;&#x2F;span&gt;&lt;span style=&quot;color:#abb2bf;&quot;&gt; systemctl diable ctrl-alt-del.target
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#5f697a;&quot;&gt;# removed
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#abb2bf;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eb6772;&quot;&gt;sudo&lt;&#x2F;span&gt;&lt;span style=&quot;color:#abb2bf;&quot;&gt; systemctl mask ctrl-alt-del.target
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#5f697a;&quot;&gt;# link to &#x2F;dev&#x2F;null
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#abb2bf;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eb6772;&quot;&gt;sudo&lt;&#x2F;span&gt;&lt;span style=&quot;color:#abb2bf;&quot;&gt; systemctl unmask ctrl-alt-del.target
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#5f697a;&quot;&gt;# removed
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#abb2bf;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eb6772;&quot;&gt;sudo&lt;&#x2F;span&gt;&lt;span style=&quot;color:#abb2bf;&quot;&gt; systemctl enable ctrl-alt-del.target
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#5f697a;&quot;&gt;# link to &#x2F;lib&#x2F;systemd&#x2F;system&#x2F;reboot.target
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h1 id=&quot;commands&quot;&gt;commands&lt;&#x2F;h1&gt;
+&lt;p&gt;In Linux distributions with systemd, the classic old commands are not installed
+on the system. Intead, their names are symlinked to the systemctl command.&lt;&#x2F;p&gt;
+&lt;p&gt;e.g. use stat command found that&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#6c7079;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#eb6772;&quot;&gt;stat&lt;&#x2F;span&gt;&lt;span style=&quot;color:#abb2bf;&quot;&gt; &#x2F;sbin&#x2F;shutdown
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;ul&gt;
+&lt;li&gt;&#x2F;sbin&#x2F;shutdown -&amp;gt; ..&#x2F;bin&#x2F;systemctl&lt;&#x2F;li&gt;
+&lt;li&gt;&#x2F;sbin&#x2F;halt -&amp;gt; ..&#x2F;bin&#x2F;systemctl&lt;&#x2F;li&gt;
+&lt;li&gt;&#x2F;sbin&#x2F;poweroff -&amp;gt; ..&#x2F;bin&#x2F;systemctl&lt;&#x2F;li&gt;
+&lt;li&gt;&#x2F;sbin&#x2F;reboot -&amp;gt; ..&#x2F;bin&#x2F;systemctl&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;shutdown&quot;&gt;shutdown&lt;&#x2F;h2&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#6c7079;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#eb6772;&quot;&gt;shutdown -h&lt;&#x2F;span&gt;&lt;span style=&quot;color:#abb2bf;&quot;&gt; now
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#5f697a;&quot;&gt;# shut down immediately, with no notification to other logged-in users
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#abb2bf;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eb6772;&quot;&gt;shutdown -h&lt;&#x2F;span&gt;&lt;span style=&quot;color:#abb2bf;&quot;&gt; +10
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#5f697a;&quot;&gt;# shut down in 10 minutes with notifications
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#abb2bf;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eb6772;&quot;&gt;shutdown -c
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#5f697a;&quot;&gt;# cancel the shutdown
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#abb2bf;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eb6772;&quot;&gt;shutdown -h&lt;&#x2F;span&gt;&lt;span style=&quot;color:#abb2bf;&quot;&gt; +10 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#9acc76;&quot;&gt;&amp;quot;own message&amp;quot;
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#5f697a;&quot;&gt;# create your own message
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#abb2bf;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eb6772;&quot;&gt;shutdown -h&lt;&#x2F;span&gt;&lt;span style=&quot;color:#abb2bf;&quot;&gt; 22:10
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#5f697a;&quot;&gt;# set a shutdown time in 24 hour format &amp;#39;hh:mm&amp;#39; format
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#abb2bf;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eb6772;&quot;&gt;shutdown -r
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#5f697a;&quot;&gt;# reboot
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#abb2bf;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eb6772;&quot;&gt;shutdown -H
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#5f697a;&quot;&gt;# halt the system without powerinf off
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#abb2bf;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eb6772;&quot;&gt;shutdown
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#5f697a;&quot;&gt;# with no options is equivalent to &amp;#39;shutdown -h +1&amp;#39;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;halt&quot;&gt;halt&lt;&#x2F;h2&gt;
+&lt;p&gt;Ref: &lt;code&gt;man 8 halt&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;poweroff&quot;&gt;poweroff&lt;&#x2F;h2&gt;
+&lt;p&gt;Ref: &lt;code&gt;man 8 poweroff&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;reboot&quot;&gt;reboot&lt;&#x2F;h2&gt;
+&lt;p&gt;Ref: &lt;code&gt;man 8 reboot&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;hr &#x2F;&gt;
+&lt;h1 id=&quot;control-with-systemctl&quot;&gt;control with systemctl&lt;&#x2F;h1&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#6c7079;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#eb6772;&quot;&gt;systemctl&lt;&#x2F;span&gt;&lt;span style=&quot;color:#abb2bf;&quot;&gt; poweroff
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#abb2bf;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eb6772;&quot;&gt;systemctl&lt;&#x2F;span&gt;&lt;span style=&quot;color:#abb2bf;&quot;&gt; shutdown
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#abb2bf;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eb6772;&quot;&gt;systemctl&lt;&#x2F;span&gt;&lt;span style=&quot;color:#abb2bf;&quot;&gt; reboot
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#abb2bf;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eb6772;&quot;&gt;systemctl&lt;&#x2F;span&gt;&lt;span style=&quot;color:#abb2bf;&quot;&gt; halt
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Ref: &lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;man 8 systemd-poweroff.service&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;man 8 systemd-halt.service&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;man 8 systemd-reboot.service&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;man 8 systemd-kexec.service&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;Note: The systemctl shutdown commands do not have the many options that the
+legacy commands do, which does not matter all that much because there
+are a lot of redundant options in the legacy commands.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;power-saving-mode&quot;&gt;power saving mode&lt;&#x2F;h2&gt;
+&lt;p&gt;systemctl provides power saving modes:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;suspend&lt;&#x2F;li&gt;
+&lt;li&gt;hibernate&lt;&#x2F;li&gt;
+&lt;li&gt;hybrid-sleep&lt;&#x2F;li&gt;
+&lt;li&gt;suspend-then-hiberate&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;Power management is affected by your UEFI, CPU capabilities, udev, Advanced
+Configuration and Power Interface (ACPI), kernel compilation options, and
+posssibly other devices and programs.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;suspend&quot;&gt;suspend&lt;&#x2F;h3&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#6c7079;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#eb6772;&quot;&gt;systemctl&lt;&#x2F;span&gt;&lt;span style=&quot;color:#abb2bf;&quot;&gt; suspend
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;This stores your current session in RAM and puts all hardware into a suspended
+state.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;hibernate&quot;&gt;hibernate&lt;&#x2F;h3&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#6c7079;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#eb6772;&quot;&gt;systemctl&lt;&#x2F;span&gt;&lt;span style=&quot;color:#abb2bf;&quot;&gt; hibernate
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;This stores your session on disk and powers off the machine.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;hybrid-sleep&quot;&gt;hybrid-sleep&lt;&#x2F;h3&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#6c7079;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#eb6772;&quot;&gt;systemctl&lt;&#x2F;span&gt;&lt;span style=&quot;color:#abb2bf;&quot;&gt; hybrid-sleep
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;This suspends your system to both memory and disk, and shuts off all devices
+expect RAM.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;suspend-then-hibernate&quot;&gt;suspend-then-hibernate&lt;&#x2F;h3&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#6c7079;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#eb6772;&quot;&gt;systemctl&lt;&#x2F;span&gt;&lt;span style=&quot;color:#abb2bf;&quot;&gt; suspend-then-hibernate
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;First goes into suspend mode, then enters hibernation after the period of time
+specified by the &lt;code&gt;HibetnateDelaySec=&lt;&#x2F;code&gt; setting in &lt;code&gt;&#x2F;etc&#x2F;systemd&#x2F;sleep.conf&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;hr &#x2F;&gt;
+&lt;h1 id=&quot;cron&quot;&gt;cron&lt;&#x2F;h1&gt;
+&lt;p&gt;A scheduled tool&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#6c7079;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#eb6772;&quot;&gt;sudo&lt;&#x2F;span&gt;&lt;span style=&quot;color:#abb2bf;&quot;&gt; dnf install cronie cronie-anacron
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;create scheduled in &lt;code&gt;&#x2F;etc&#x2F;crontab&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Ref: &lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;man 8 cron&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;man 1 crontab&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;man 5 crontab&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h1 id=&quot;rtc-wake&quot;&gt;rtc wake&lt;&#x2F;h1&gt;
+&lt;p&gt;stops and wakes your system, send it to ACPI&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;system&#x27;s real-time clock (RTC) should be set to Coordinated Universal Time
+(UTC)&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;&#x2F;sys&#x2F;power&#x2F;state&lt;&#x2F;code&gt; include sleep states your system supports, on non-systemd
+system is &lt;code&gt;proc&#x2F;acpi&#x2F;info&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;hr &#x2F;&gt;
+&lt;h1 id=&quot;acpi&quot;&gt;ACPI&lt;&#x2F;h1&gt;
+&lt;h2 id=&quot;sleep-states&quot;&gt;sleep states&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;S0    System is running, monitor may be off, most periherals are on&lt;&#x2F;li&gt;
+&lt;li&gt;S1    Power-on suspended, CPU stops, power to CPU and RAM is on&lt;&#x2F;li&gt;
+&lt;li&gt;S2    CPU is powered off, dirty cache is flushed to RAM&lt;&#x2F;li&gt;
+&lt;li&gt;S3    Also called standby, sleep, and suspend-to-RAM. Data may not be written
+to disk&lt;&#x2F;li&gt;
+&lt;li&gt;S4    Hibernation, suspend-to-disk. Everything in RAM is written to disk and 
+system is powered down.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+</description>
+      </item>
+    </channel>
+</rss>

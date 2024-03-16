@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <meta content="#ffffff" name="theme-color" />
+  <meta content="#da532c" name="msapplication-TileColor" />
+
+  
+  <link href='&#x2F;icons&#x2F;site.webmanifest' rel="manifest" />
+  
+  
+  <link color="#5bbad5" href='&#x2F;icons&#x2F;safari-pinned-tab.svg' rel="mask-icon" />
+  
+  
+  <link href='&#x2F;icons&#x2F;favicon-16x16.png' rel="icon" sizes="16x16" type="image/png" />
+  
+  
+  <link href='&#x2F;icons&#x2F;favicon-32x32.png' rel="icon" sizes="32x32" type="image/png" />
+  
+  
+  <link href='&#x2F;icons&#x2F;apple-touch-icon.png' rel="apple-touch-icon" sizes="180x180" />
+  
+
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/galleria@1.6.1/dist/themes/folio/galleria.folio.min.css" integrity="sha384-+rY0QD+LRnTOquDMzGa9lXU6jIwdiQuwCJQ2cdcW0qeP/0UbjQCZlXnRsUMA+9pH" crossorigin="anonymous">
+  
+
+  
+  <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css" integrity="sha384-oGm59HWAkwO32h2w8u0B98wKBZJwd6MbWtAJwQKCTffZjOXHXrnyv9Syjovgc+UV" crossorigin="anonymous">
+  
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1.9.1/css/academicons.min.css" integrity="sha384-FIue+PI4SsI9XfHCz8dBLg33b0c1fMJgNU3X//L26FYbGnlSEfWmNT7zgWc2N9b6" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link href="https://haiteng.com/deep-thought.css" rel="stylesheet" />
+  
+  
+
+  <title>
+    
+HaiTeng Zheng | Linux power control
+
+  </title>
+
+  
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-JPHGX4YXVE"></script>
+  <script type="text/javascript">
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+    gtag("config", "G-JPHGX4YXVE");
+  </script>
+  
+  
+
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css" integrity="sha384-R4558gYOUz8mP9YWpZJjofhk+zx0AS11p36HnD2ZKj/6JR5z27gSSULCNHIRReVs" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js" integrity="sha384-z1fJDqw8ZApjGO3/unPWUPsIymfsJmyrDVWC8Tv/a1HeOtGmkwNd/7xUS0Xcnvsx" crossorigin="anonymous"></script>
+
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/mathtex-script-type.min.js" integrity="sha384-jiBVvJ8NGGj5n7kJaiWwWp9AjC+Yh8rhZY3GtAX8yU28azcLgoRo4oukO87g7zDT" crossorigin="anonymous"></script>
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/auto-render.min.js" integrity="sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR" crossorigin="anonymous"></script>
+  
+  
+</head>
+
+<body class="has-background-white">
+  <nav aria-label="section navigation" class="navbar is-light" role="navigation">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item is-size-5 has-text-weight-bold" href="https:&#x2F;&#x2F;haiteng.com">HaiTeng Zheng</a>
+        <a aria-expanded="false" aria-label="menu" class="navbar-burger burger" data-target="navMenu" role="button">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      <div class="navbar-menu" id="navMenu">
+        <div class="navbar-end has-text-centered">
+          
+          
+          
+          <a class="navbar-item has-text-weight-semibold" href="https:&#x2F;&#x2F;haiteng.com&#x2F;">
+            Home
+          </a>
+          
+          <a class="navbar-item has-text-weight-semibold" href="https:&#x2F;&#x2F;haiteng.com&#x2F;posts">
+            Posts
+          </a>
+          
+          <a class="navbar-item has-text-weight-semibold" href="https:&#x2F;&#x2F;haiteng.com&#x2F;docs">
+            Docs
+          </a>
+          
+          <a class="navbar-item has-text-weight-semibold" href="https:&#x2F;&#x2F;haiteng.com&#x2F;tags">
+            Tags
+          </a>
+          
+          <a class="navbar-item has-text-weight-semibold" href="https:&#x2F;&#x2F;haiteng.com&#x2F;categories">
+            Categories
+          </a>
+          
+          
+          
+          <a class="navbar-item" id="nav-search" title="Search" data-target="#search-modal">
+            <span class="icon">
+              <i class="fas fa-search"></i>
+            </span>
+          </a>
+          <a class="navbar-item" id="dark-mode" title="Switch to dark theme">
+            <span class="icon">
+              <i class="fas fa-adjust"></i>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  
+  
+
+  
+<section class="section">
+  <div class="container">
+    <div class="columns">
+      <div class="column is-8 is-offset-2">
+        <article class="box">
+          <h1 class="title">
+            Linux power control
+          </h1>
+          <p class="subtitle">start, stop, restart and sleep</p>
+          <div class="columns is-multiline is-gapless">
+            <div class="column is-8">
+              
+<span class="icon-text has-text-grey">
+  <span class="icon">
+    <i class="fas fa-user"></i>
+  </span>
+  <span>HaiTeng Zheng published on</span>
+  <span class="icon">
+    <i class="far fa-calendar-alt"></i>
+  </span>
+  <span><time datetime="2024-01-03">January 03, 2024</time></span>
+</span>
+
+            </div>
+            <div class="column is-4 has-text-right-desktop">
+              
+<span class="icon-text has-text-grey">
+  <span class="icon">
+    <i class="far fa-clock"></i>
+  </span>
+  <span>3 min,</span>
+  <span class="icon">
+    <i class="fas fa-pencil-alt"></i>
+  </span>
+  <span>585 words</span>
+</span>
+
+            </div>
+            <div class="column">
+              
+              
+<p>
+  Categories:
+  
+  <a class="has-text-info-dark has-text-weight-semibold" href="https://haiteng.com/categories/system-control/">
+    <span class="icon-text">
+      <span class="icon">
+        <i class="fas fa-cube"></i>
+      </span>
+      <span>system_control</span>
+    </span>
+  </a>
+  
+</p>
+
+              
+            </div>
+            <div class="column has-text-right-desktop">
+              
+              
+<p>
+  Tags:
+  
+  <a class="has-text-info-dark has-text-weight-semibold" href="https://haiteng.com/tags/systemctl/">
+    <span class="icon-text">
+      <span class="icon">
+        <i class="fas fa-tag"></i>
+      </span>
+      <span>systemctl</span>
+    </span>
+  </a>
+  
+  <a class="has-text-info-dark has-text-weight-semibold" href="https://haiteng.com/tags/linux/">
+    <span class="icon-text">
+      <span class="icon">
+        <i class="fas fa-tag"></i>
+      </span>
+      <span>linux</span>
+    </span>
+  </a>
+  
+</p>
+
+              
+            </div>
+          </div>
+          <div class="content mt-2">
+            <h1 id="poweroff-shortcut">poweroff shortcut</h1>
+<p><code>Ctrl-Alt-Delete</code> is the shortcut for poweroffing the linux machine.</p>
+<p>On Linux systems that do not use systemd, it is contolled by the `/etc/iniitab' 
+(no longer use in other system)</p>
+<h2 id="configure-ctrl-alt-delete">configure Ctrl-Alt-Delete</h2>
+<p>Ref: <code>man 7 systemd.special</code></p>
+<p>The <code>Ctrl-Alt-Delete</code> unit file is not a service, but a target, so it does not
+run as a daemon. If the <code>/etc/systemd/system/ctrl-alt-del.target</code> symlink
+exists, <code>Ctrl-Alt-Delete</code> is enables.</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#6c7079;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#eb6772;">sudo</span><span style="color:#abb2bf;"> systemctl diable ctrl-alt-del.target
+</span><span style="font-style:italic;color:#5f697a;"># removed
+</span><span style="color:#abb2bf;">
+</span><span style="color:#eb6772;">sudo</span><span style="color:#abb2bf;"> systemctl mask ctrl-alt-del.target
+</span><span style="font-style:italic;color:#5f697a;"># link to /dev/null
+</span><span style="color:#abb2bf;">
+</span><span style="color:#eb6772;">sudo</span><span style="color:#abb2bf;"> systemctl unmask ctrl-alt-del.target
+</span><span style="font-style:italic;color:#5f697a;"># removed
+</span><span style="color:#abb2bf;">
+</span><span style="color:#eb6772;">sudo</span><span style="color:#abb2bf;"> systemctl enable ctrl-alt-del.target
+</span><span style="font-style:italic;color:#5f697a;"># link to /lib/systemd/system/reboot.target
+</span></code></pre>
+<hr />
+<h1 id="commands">commands</h1>
+<p>In Linux distributions with systemd, the classic old commands are not installed
+on the system. Intead, their names are symlinked to the systemctl command.</p>
+<p>e.g. use stat command found that</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#6c7079;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#eb6772;">stat</span><span style="color:#abb2bf;"> /sbin/shutdown
+</span></code></pre>
+<ul>
+<li>/sbin/shutdown -&gt; ../bin/systemctl</li>
+<li>/sbin/halt -&gt; ../bin/systemctl</li>
+<li>/sbin/poweroff -&gt; ../bin/systemctl</li>
+<li>/sbin/reboot -&gt; ../bin/systemctl</li>
+</ul>
+<h2 id="shutdown">shutdown</h2>
+<pre data-lang="bash" style="background-color:#2b303b;color:#6c7079;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#eb6772;">shutdown -h</span><span style="color:#abb2bf;"> now
+</span><span style="font-style:italic;color:#5f697a;"># shut down immediately, with no notification to other logged-in users
+</span><span style="color:#abb2bf;">
+</span><span style="color:#eb6772;">shutdown -h</span><span style="color:#abb2bf;"> +10
+</span><span style="font-style:italic;color:#5f697a;"># shut down in 10 minutes with notifications
+</span><span style="color:#abb2bf;">
+</span><span style="color:#eb6772;">shutdown -c
+</span><span style="font-style:italic;color:#5f697a;"># cancel the shutdown
+</span><span style="color:#abb2bf;">
+</span><span style="color:#eb6772;">shutdown -h</span><span style="color:#abb2bf;"> +10 </span><span style="color:#9acc76;">&quot;own message&quot;
+</span><span style="font-style:italic;color:#5f697a;"># create your own message
+</span><span style="color:#abb2bf;">
+</span><span style="color:#eb6772;">shutdown -h</span><span style="color:#abb2bf;"> 22:10
+</span><span style="font-style:italic;color:#5f697a;"># set a shutdown time in 24 hour format &#39;hh:mm&#39; format
+</span><span style="color:#abb2bf;">
+</span><span style="color:#eb6772;">shutdown -r
+</span><span style="font-style:italic;color:#5f697a;"># reboot
+</span><span style="color:#abb2bf;">
+</span><span style="color:#eb6772;">shutdown -H
+</span><span style="font-style:italic;color:#5f697a;"># halt the system without powerinf off
+</span><span style="color:#abb2bf;">
+</span><span style="color:#eb6772;">shutdown
+</span><span style="font-style:italic;color:#5f697a;"># with no options is equivalent to &#39;shutdown -h +1&#39;
+</span></code></pre>
+<h2 id="halt">halt</h2>
+<p>Ref: <code>man 8 halt</code></p>
+<h2 id="poweroff">poweroff</h2>
+<p>Ref: <code>man 8 poweroff</code></p>
+<h2 id="reboot">reboot</h2>
+<p>Ref: <code>man 8 reboot</code></p>
+<hr />
+<h1 id="control-with-systemctl">control with systemctl</h1>
+<pre data-lang="bash" style="background-color:#2b303b;color:#6c7079;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#eb6772;">systemctl</span><span style="color:#abb2bf;"> poweroff
+</span><span style="color:#abb2bf;">
+</span><span style="color:#eb6772;">systemctl</span><span style="color:#abb2bf;"> shutdown
+</span><span style="color:#abb2bf;">
+</span><span style="color:#eb6772;">systemctl</span><span style="color:#abb2bf;"> reboot
+</span><span style="color:#abb2bf;">
+</span><span style="color:#eb6772;">systemctl</span><span style="color:#abb2bf;"> halt
+</span></code></pre>
+<p>Ref: </p>
+<ul>
+<li><code>man 8 systemd-poweroff.service</code></li>
+<li><code>man 8 systemd-halt.service</code></li>
+<li><code>man 8 systemd-reboot.service</code></li>
+<li><code>man 8 systemd-kexec.service</code></li>
+</ul>
+<p>Note: The systemctl shutdown commands do not have the many options that the
+legacy commands do, which does not matter all that much because there
+are a lot of redundant options in the legacy commands.</p>
+<h2 id="power-saving-mode">power saving mode</h2>
+<p>systemctl provides power saving modes:</p>
+<ul>
+<li>suspend</li>
+<li>hibernate</li>
+<li>hybrid-sleep</li>
+<li>suspend-then-hiberate</li>
+</ul>
+<p>Power management is affected by your UEFI, CPU capabilities, udev, Advanced
+Configuration and Power Interface (ACPI), kernel compilation options, and
+posssibly other devices and programs.</p>
+<h3 id="suspend">suspend</h3>
+<pre data-lang="bash" style="background-color:#2b303b;color:#6c7079;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#eb6772;">systemctl</span><span style="color:#abb2bf;"> suspend
+</span></code></pre>
+<p>This stores your current session in RAM and puts all hardware into a suspended
+state.</p>
+<h3 id="hibernate">hibernate</h3>
+<pre data-lang="bash" style="background-color:#2b303b;color:#6c7079;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#eb6772;">systemctl</span><span style="color:#abb2bf;"> hibernate
+</span></code></pre>
+<p>This stores your session on disk and powers off the machine.</p>
+<h3 id="hybrid-sleep">hybrid-sleep</h3>
+<pre data-lang="bash" style="background-color:#2b303b;color:#6c7079;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#eb6772;">systemctl</span><span style="color:#abb2bf;"> hybrid-sleep
+</span></code></pre>
+<p>This suspends your system to both memory and disk, and shuts off all devices
+expect RAM.</p>
+<h3 id="suspend-then-hibernate">suspend-then-hibernate</h3>
+<pre data-lang="bash" style="background-color:#2b303b;color:#6c7079;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#eb6772;">systemctl</span><span style="color:#abb2bf;"> suspend-then-hibernate
+</span></code></pre>
+<p>First goes into suspend mode, then enters hibernation after the period of time
+specified by the <code>HibetnateDelaySec=</code> setting in <code>/etc/systemd/sleep.conf</code></p>
+<hr />
+<h1 id="cron">cron</h1>
+<p>A scheduled tool</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#6c7079;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#eb6772;">sudo</span><span style="color:#abb2bf;"> dnf install cronie cronie-anacron
+</span></code></pre>
+<p>create scheduled in <code>/etc/crontab</code></p>
+<p>Ref: </p>
+<ul>
+<li><code>man 8 cron</code></li>
+<li><code>man 1 crontab</code></li>
+<li><code>man 5 crontab</code></li>
+</ul>
+<h1 id="rtc-wake">rtc wake</h1>
+<p>stops and wakes your system, send it to ACPI</p>
+<ul>
+<li>
+<p>system's real-time clock (RTC) should be set to Coordinated Universal Time
+(UTC)</p>
+</li>
+<li>
+<p><code>/sys/power/state</code> include sleep states your system supports, on non-systemd
+system is <code>proc/acpi/info</code></p>
+</li>
+</ul>
+<hr />
+<h1 id="acpi">ACPI</h1>
+<h2 id="sleep-states">sleep states</h2>
+<ul>
+<li>S0    System is running, monitor may be off, most periherals are on</li>
+<li>S1    Power-on suspended, CPU stops, power to CPU and RAM is on</li>
+<li>S2    CPU is powered off, dirty cache is flushed to RAM</li>
+<li>S3    Also called standby, sleep, and suspend-to-RAM. Data may not be written
+to disk</li>
+<li>S4    Hibernation, suspend-to-disk. Everything in RAM is written to disk and 
+system is powered down.</li>
+</ul>
+
+          </div>
+        </article>
+      </div>
+      
+      <div class="column is-2 is-hidden-mobile">
+        <aside class="menu" style="position: sticky; top: 48px">
+          <p class="heading has-text-weight-bold">Contents</p>
+          <ul class="menu-list">
+            
+            <li>
+              <a id="link-poweroff-shortcut" class="toc is-size-7 is-active"
+                href="https://haiteng.com/docs/linux-power-control/#poweroff-shortcut">
+                poweroff shortcut
+              </a>
+              
+              <ul>
+                
+                <li>
+                  <a id="link-configure-ctrl-alt-delete" class="toc is-size-7" href="https://haiteng.com/docs/linux-power-control/#configure-ctrl-alt-delete">
+                    configure Ctrl-Alt-Delete
+                  </a>
+                </li>
+                
+              </ul>
+              
+            </li>
+            
+            <li>
+              <a id="link-commands" class="toc is-size-7 "
+                href="https://haiteng.com/docs/linux-power-control/#commands">
+                commands
+              </a>
+              
+              <ul>
+                
+                <li>
+                  <a id="link-shutdown" class="toc is-size-7" href="https://haiteng.com/docs/linux-power-control/#shutdown">
+                    shutdown
+                  </a>
+                </li>
+                
+                <li>
+                  <a id="link-halt" class="toc is-size-7" href="https://haiteng.com/docs/linux-power-control/#halt">
+                    halt
+                  </a>
+                </li>
+                
+                <li>
+                  <a id="link-poweroff" class="toc is-size-7" href="https://haiteng.com/docs/linux-power-control/#poweroff">
+                    poweroff
+                  </a>
+                </li>
+                
+                <li>
+                  <a id="link-reboot" class="toc is-size-7" href="https://haiteng.com/docs/linux-power-control/#reboot">
+                    reboot
+                  </a>
+                </li>
+                
+              </ul>
+              
+            </li>
+            
+            <li>
+              <a id="link-control-with-systemctl" class="toc is-size-7 "
+                href="https://haiteng.com/docs/linux-power-control/#control-with-systemctl">
+                control with systemctl
+              </a>
+              
+              <ul>
+                
+                <li>
+                  <a id="link-power-saving-mode" class="toc is-size-7" href="https://haiteng.com/docs/linux-power-control/#power-saving-mode">
+                    power saving mode
+                  </a>
+                </li>
+                
+              </ul>
+              
+            </li>
+            
+            <li>
+              <a id="link-cron" class="toc is-size-7 "
+                href="https://haiteng.com/docs/linux-power-control/#cron">
+                cron
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-rtc-wake" class="toc is-size-7 "
+                href="https://haiteng.com/docs/linux-power-control/#rtc-wake">
+                rtc wake
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-acpi" class="toc is-size-7 "
+                href="https://haiteng.com/docs/linux-power-control/#acpi">
+                ACPI
+              </a>
+              
+              <ul>
+                
+                <li>
+                  <a id="link-sleep-states" class="toc is-size-7" href="https://haiteng.com/docs/linux-power-control/#sleep-states">
+                    sleep states
+                  </a>
+                </li>
+                
+              </ul>
+              
+            </li>
+            
+          </ul>
+        </aside>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+
+  
+  <section class="modal" id="search-modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Search</p>
+      </header>
+      <section class="modal-card-body">
+        <div class="field mb-2">
+          <div class="control">
+            <input class="input" id="search" placeholder="Search this website." type="search" />
+          </div>
+        </div>
+        <div class="search-results">
+          <div class="search-results__items"></div>
+        </div>
+      </section>
+    </div>
+    <button aria-label="close" class="modal-close is-large"></button>
+  </section>
+  
+
+
+  
+
+<section class="section">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <nav class="level">
+              
+          <div class="level-item has-text-centered">
+            <a class="button is-black is-outlined" href="https:&#x2F;&#x2F;haiteng.com&#x2F;docs&#x2F;openssl&#x2F;">
+              <span class="icon mr-2">
+                <i class="fas fa-arrow-circle-left"></i>
+              </span>
+              OpenSSL 3.0
+            </a>
+          </div>
+           
+        </nav>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+  
+
+
+
+  
+  <footer class="footer py-4">
+    <div class="content has-text-centered">
+      <p>
+        Built with
+        <span class="icon-text">
+          <span class="icon">
+            <i class="fas fa-code"></i>
+          </span>
+          <span>code</span>
+        </span>
+        and
+        <span class="icon-text">
+          <span class="icon">
+            <i class="fas fa-heart"></i>
+          </span>
+          <span>love</span>
+        </span>
+      </p>
+      <p>
+        Powered by
+        <span class="icon-text">
+          <span class="icon">
+            <i class="fas fa-power-off"></i>
+          </span>
+          <span>zola</span>
+        </span>
+      </p>
+    </div>
+  </footer>
+  
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha384-vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/galleria@1.6.1/dist/galleria.min.js" integrity="sha384-QSfwGT8/EU536DKdtyP2D6SLlh8zBaZ0cVkwfrwhqzIU9VCfJT00CLVP5t+HAiYg" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/galleria@1.6.1/dist/themes/folio/galleria.folio.min.js" integrity="sha384-DwpKI+deZB267+hPKwiOIc5Y2GKsVL0mR6hgz7GgIu7AgAMYqJwcJKY1YBNfhWcY" crossorigin="anonymous"></script>
+  
+  
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@8.13.5/dist/mermaid.min.js" integrity="sha384-0yWn54pSGtfKCU+skfA69l25VsCw+MZt4LQov3xNRoS7YkAMrFokGgSBnAWSK4pv" crossorigin="anonymous"></script>
+  
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.xkcd@1.1.13/dist/chart.xkcd.min.js" integrity="sha384-xC3h1+IHXK8seA+8KfT79Z4e0GPsznjXBoMa5nd8ooWKplPyXx92NOmljWxLC/cs" crossorigin="anonymous"></script>
+  
+  
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js" integrity="sha384-Pulw7+h73841BQIK0LzJCydKRPChJUF9w8h8W0o3h+cLtoyNPJS847bQauLWOTwg" crossorigin="anonymous"></script>
+  
+  <script src="https://haiteng.com/elasticlunr.min.js"></script>
+  <script src="https://haiteng.com/search_index.en.js"></script><script src="https://haiteng.com/js/site.js"></script>
+
+  
+
+<script type="text/javascript">
+  const menuBarHeight = document.querySelector("nav.navbar").clientHeight;
+  const tocItems = document.querySelectorAll(".toc");
+  const navSections = new Array(tocItems.length);
+
+  tocItems.forEach((el, i) => {
+    let id = el.getAttribute("id").substring(5);
+    navSections[i] = document.getElementById(id);
+  })
+
+  function isVisible(tocIndex) {
+    const current = navSections[tocIndex];
+    const next = tocIndex < tocItems.length - 1 ? navSections[tocIndex + 1]
+      : document.querySelectorAll("section.section").item(1);
+
+    const c = current.getBoundingClientRect();
+    const n = next.getBoundingClientRect();
+    const h = (window.innerHeight || document.documentElement.clientHeight);
+
+    return (c.top <= h) && (n.top - menuBarHeight >= 0);
+  }
+
+  function activateIfVisible() {
+    for (b = true, i = 0; i < tocItems.length; i++) {
+      if (b && isVisible(i)) {
+        tocItems[i].classList.add('is-active');
+        b = false;
+      } else
+        tocItems[i].classList.remove('is-active');
+    }
+  }
+
+  var isTicking = null;
+  window.addEventListener('scroll', () => {
+    if (!isTicking) {
+      window.requestAnimationFrame(() => {
+        activateIfVisible();
+        isTicking = false;
+      });
+      isTicking = true;
+    }
+  }, false);
+</script>
+
+
+
+
+
+  
+  
+</body>
+
+</html>

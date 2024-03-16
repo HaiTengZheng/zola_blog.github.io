@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+      <title>HaiTeng Zheng - OpenSSL</title>
+      <link>https://haiteng.com</link>
+      <description>A personal blog focused on linux, software and others.</description>
+      <generator>Zola</generator>
+      <language>en</language>
+      <atom:link href="https://haiteng.com/tags/openssl/rss.xml" rel="self" type="application/rss+xml"/>
+      <lastBuildDate>Wed, 03 Jan 2024 00:00:00 +0000</lastBuildDate>
+      <item>
+          <title>OpenSSL 3.0</title>
+          <pubDate>Wed, 03 Jan 2024 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://haiteng.com/docs/openssl/</link>
+          <guid>https://haiteng.com/docs/openssl/</guid>
+          <description></description>
+      </item>
+    </channel>
+</rss>
